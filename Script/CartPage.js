@@ -5,6 +5,7 @@ import { Delivery } from '../Products data/Delivery.js'
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js'
 // console.log(cart)
 
+function all(){
 let html = ``;
 
 cart.forEach((ele) => {
@@ -97,7 +98,9 @@ cart.forEach((ele) => {
 
 
 
-})
+}
+
+)
 
 
 // delivery Options
@@ -134,6 +137,7 @@ function deli(proId, cartEle) {
   }
   )
   return delHtml;
+  // all()
 }
 
 
@@ -218,5 +222,10 @@ document.querySelectorAll('.delivery-option').forEach((ele)=>{
     let p=ele.dataset.proid;
     let d=ele.dataset.delid;
    updateDelivery(p,d);
+  //  This will reload page[Recursion]
+   all()
   })
 })
+
+}
+all()
