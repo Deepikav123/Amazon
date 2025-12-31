@@ -15,6 +15,7 @@ cart.forEach((ele) => {
       matching = pro
     }
   })
+  
   // For delivery date
 
 
@@ -24,11 +25,11 @@ cart.forEach((ele) => {
       deliver = d;
     }
   })
-  console.log("Deliver")
-console.log(deliver)
-console.log(deliver.d)
 
-// Temp
+// console.log(deliver)
+
+
+// Display
   let today = dayjs();
   let date = today.add(deliver.d, 'days')
   let display = date.format(`dddd, MMMM D`);
@@ -101,7 +102,8 @@ console.log(deliver.d)
 
 // delivery Options
 
-function deli(m, cartEle) {
+function deli(proId, cartEle) {
+  // console.log(proId)
   let delHtml = ``;
 
   Delivery.forEach((e) => {
@@ -116,10 +118,10 @@ function deli(m, cartEle) {
     delHtml +=
       `
       
-                    <div class="delivery-option " data-pid=${m} data-eid=${e.id}>
+                    <div class="delivery-option " data-proid=${proId} data-delid=${e.id}>
                       <input type="radio" ${find ? 'checked' : ''}
                         class="delivery-option-input"
-                        name="delivery-option-${m}">
+                        name="delivery-option-${proId}">
                       <div>
                         <div class="delivery-option-date">
                          ${display}
@@ -211,3 +213,10 @@ function updatequantity() {
 //    updateDelivery(p,d);
 //   })
 // })
+document.querySelectorAll('.delivery-option').forEach((ele)=>{
+  ele.addEventListener('click',()=>{
+    let p=ele.dataset.proid;
+    let d=ele.dataset.delid;
+   updateDelivery(p,d);
+  })
+})
