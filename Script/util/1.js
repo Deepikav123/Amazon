@@ -1,6 +1,6 @@
-import { cart,addCart,added,quantity} from '../Products data/cart.js'
-import { products } from '../Products data/products.js'
-import {convert} from '../Script/money.js'
+import { cart,addCart,added,quantity} from '../../Products data/cart.js'
+import { products } from '../../Products data/products.js'
+import {convert} from '../money.js'
 let htmlcode = ' ';
 products.forEach((items) => {
     htmlcode += `

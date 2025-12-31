@@ -1,11 +1,11 @@
-import { cart, takeOff, quantity, newQuan,updateDelivery } from '../Products data/cart.js'
-import { products } from '../Products data/products.js'
-import { convert } from '../Script/money.js'
-import { Delivery } from '../Products data/Delivery.js'
+import { cart, takeOff, quantity, newQuan,updateDelivery } from '../../Products data/cart.js'
+import { products } from '../../Products data/products.js'
+import { convert } from '../util/money.js'
+import { Delivery } from '../../Products data/Delivery.js'
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js'
 // console.log(cart)
 
-function all(){
+export function all(){
 let html = ``;
 
 cart.forEach((ele) => {
@@ -228,4 +228,3 @@ document.querySelectorAll('.delivery-option').forEach((ele)=>{
 })
 
 }
-all()
