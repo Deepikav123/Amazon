@@ -24,17 +24,20 @@ cart.forEach((ele) => {
       deliver = d;
     }
   })
-// console.log(deliver)
+  console.log("Deliver")
+console.log(deliver)
+console.log(deliver.d)
 
 // Temp
-  // let today = dayjs();
-  // let date = today.add(deliver.d, 'days')
-  // let display = date.format(`dddd, MMMM D`);
+  let today = dayjs();
+  let date = today.add(deliver.d, 'days')
+  let display = date.format(`dddd, MMMM D`);
+ 
 
   html += `
     <div class="cart-item-container  id-${matching.id}">
             <div class="delivery-date">
-              Delivery date:Disp
+              Delivery date:${display}
             </div>
 
             <div class="cart-item-details-grid">
