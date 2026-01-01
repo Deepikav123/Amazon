@@ -1,3 +1,14 @@
+export function MatchDeliveryAndcartDid(Id){
+  let deliver;
+  Delivery.forEach((d) => {
+    if (Id ==d.id) {
+      deliver = d;
+    }
+  })
+  return deliver
+
+}
+
 export const Delivery=[{
     id:1,
     d:7,

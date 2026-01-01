@@ -1,6 +1,6 @@
 import { cart,addCart,added,quantity} from '../../Products data/cart.js'
 import { products } from '../../Products data/products.js'
-import {convert} from '../money.js'
+import {convert} from '../util/money.js'
 let htmlcode = ' ';
 products.forEach((items) => {
     htmlcode += `
@@ -18,7 +18,7 @@ products.forEach((items) => {
     <div class="num">${items.rating.count}</div>
 
 </div>
-<div class="price">${convert(items.priceCents)}</div>
+<div class="price">$${convert(items.priceCents)}</div>
 <div class="select">
     <select name="sel" class="s pro-id-${items.id}" >
         <option>1</option>

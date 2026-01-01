@@ -43,6 +43,7 @@ console.log(cart)
     setTimeout(function () {
         document.querySelector(`.uni-${id}`).classList.remove('green1')
     }, 2000)
+    console.log(cart)
 }
 
 export function quantity() {

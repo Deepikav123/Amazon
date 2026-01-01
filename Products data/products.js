@@ -1,3 +1,13 @@
+export function MatchCartAndProId(Id){
+    let matching;
+   products.forEach((pro) => {
+     if (pro.id ===Id) {
+       matching = pro
+     }
+   })
+   return matching
+ }
+ 
  export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",

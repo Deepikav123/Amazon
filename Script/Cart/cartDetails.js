@@ -1,34 +1,20 @@
 import { cart, takeOff, quantity, newQuan,updateDelivery } from '../../Products data/cart.js'
-import { products } from '../../Products data/products.js'
+import { MatchCartAndProId } from '../../Products data/products.js'
 import { convert } from '../util/money.js'
-import { Delivery } from '../../Products data/Delivery.js'
+import { Delivery,MatchDeliveryAndcartDid } from '../../Products data/Delivery.js'
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js'
+import { Payment } from './payment.js'
 // console.log(cart)
+
 
 export function all(){
 let html = ``;
 
 cart.forEach((ele) => {
-  let matching;
-  // let id=ele.id;
-  products.forEach((pro) => {
-    if (pro.id === ele.id) {
-      matching = pro
-    }
-  })
-  
+ 
+let matching=MatchCartAndProId(ele.id)
   // For delivery date
-
-
-  let deliver;
-  Delivery.forEach((d) => {
-    if (ele.dId ==d.id) {
-      deliver = d;
-    }
-  })
-
-// console.log(deliver)
-
+let deliver=MatchDeliveryAndcartDid(ele.dId)
 
 // Display
   let today = dayjs();
@@ -51,7 +37,7 @@ cart.forEach((ele) => {
                   ${matching.name}
                 </div>
                 <div class="product-price">
-                  ${convert(matching.priceCents)}
+                  $${convert(matching.priceCents)}
                 </div>
                 <div class="product-quantity">
                   <span>
@@ -114,7 +100,7 @@ function deli(proId, cartEle) {
     let today = dayjs();
     let date = today.add(e.d, 'days')
     let display = date.format(`dddd, MMMM D`);
-    let p = e.price === 0 ? 'Free' : `${convert(e.price)}-`
+    let p = e.price === 0 ? 'Free' : `$${convert(e.price)}-`
 
     let find = cartEle.dId ==e.id
     // console.log(`1:${typeof(e.id)}`)
@@ -164,6 +150,7 @@ document.querySelectorAll('.delete-quantity-link').forEach((link) => {
     let rem = document.querySelector(`.id-${del}`);
     rem.remove()
     updatequantity()
+    Payment()
   })
 })
 
@@ -194,6 +181,7 @@ document.querySelectorAll('.save-quantity').forEach((ele) => {
   }
   ele.addEventListener('click', (() => {
     saving()
+    Payment()
   }))
 
   let box = document.querySelector(`.inp-${save}`);
@@ -210,13 +198,6 @@ function updatequantity() {
 
 }
 
-// document.querySelectorAll('.delivery-option').forEach((v)=>{
-//   v.addEventListener('click',()=>{
-//    let p=Number(v.dataset.pid);
-//    let d=Number(v.dataset.eid);
-//    updateDelivery(p,d);
-//   })
-// })
 document.querySelectorAll('.delivery-option').forEach((ele)=>{
   ele.addEventListener('click',()=>{
     let p=ele.dataset.proid;
@@ -224,6 +205,7 @@ document.querySelectorAll('.delivery-option').forEach((ele)=>{
    updateDelivery(p,d);
   //  This will reload page[Recursion]
    all()
+   Payment()
   })
 })
 
