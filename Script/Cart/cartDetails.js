@@ -147,9 +147,7 @@ document.querySelectorAll('.delete-quantity-link').forEach((link) => {
     // console.log(trash)
     takeOff(trash)
 
-    let rem = document.querySelector(`.id-${del}`);
-    rem.remove()
-    updatequantity()
+   all()
     Payment()
   })
 })
