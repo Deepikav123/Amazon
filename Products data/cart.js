@@ -1,8 +1,8 @@
-export let cart=JSON.parse(localStorage.getItem('storage'))||
-[ ];
+export let cart = JSON.parse(localStorage.getItem('storage')) ||
+    [];
 
-function store(){
-localStorage.setItem('storage',JSON.stringify(cart));
+function store() {
+    localStorage.setItem('storage', JSON.stringify(cart));
 }
 
 export function addCart(id) {
@@ -24,19 +24,19 @@ export function addCart(id) {
         cart.push({
             id,
             quantity: val,
-            dId:rand()
+            dId: rand()
         });
 
     }
     // console.log(typeof(cart.dId))
     document.querySelector('.n').innerHTML = quantity();
-console.log(cart)
+    console.log(cart)
     // Here store function is called because,addcart() updates string
     store()
 }
 
 
- export function added(id) {
+export function added(id) {
     let display = document.querySelector(`.uni-${id}`)
     display.classList.add("green1")
     display.innerHTML = "Added ✓"
@@ -58,50 +58,50 @@ export function quantity() {
 
 
 
-export function takeOff(delId){
-    let newCart=[]
-    cart.forEach((e)=>{
-        if(e.id!==delId){
+export function takeOff(delId) {
+    let newCart = []
+    cart.forEach((e) => {
+        if (e.id !== delId) {
             newCart.push(e)
         }
 
-})
-cart=newCart;
-// Here store function is called because,takeOff() updates string
+    })
+    cart = newCart;
+    // Here store function is called because,takeOff() updates string
     store();
 }
-export function newQuan(proId,q){
-    cart.forEach((e)=>{
-        if(e.id===proId){
-            e.quantity=q
+export function newQuan(proId, q) {
+    cart.forEach((e) => {
+        if (e.id === proId) {
+            e.quantity = q
         }
     })
     store()
 }
 
-function rand(){
-    let r=Math.random()
-   
- if(r>=0 && r<1/3){
-   return Number(1)
- }
- else if(r>=1/3 && r < 2/3){
-   return Number(2)
- }
- else {
-      return Number(3)
+function rand() {
+    let r = Math.random()
 
- }
+    if (r >= 0 && r < 1 / 3) {
+        return Number(1)
+    }
+    else if (r >= 1 / 3 && r < 2 / 3) {
+        return Number(2)
+    }
+    else {
+        return Number(3)
+
+    }
 
 }
 
-export function updateDelivery(proId,DelID){
+export function updateDelivery(proId, DelID) {
     let match;
-    cart.forEach((e)=>{
-       if(e.id==proId){
-        match=e;
-       }
+    cart.forEach((e) => {
+        if (e.id == proId) {
+            match = e;
+        }
     })
-    match.dId=DelID;
+    match.dId = DelID;
     store()
 }

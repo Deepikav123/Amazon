@@ -1,28 +1,33 @@
-import { cart, takeOff, quantity, newQuan,updateDelivery } from '../../Products data/cart.js'
+import { cart, takeOff, quantity, newQuan, updateDelivery } from '../../Products data/cart.js'
 import { MatchCartAndProId } from '../../Products data/products.js'
 import { convert } from '../util/money.js'
-import { Delivery,MatchDeliveryAndcartDid } from '../../Products data/Delivery.js'
-import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js'
+import { Delivery, MatchDeliveryAndcartDid, AddDate } from '../../Products data/Delivery.js'
 import { Payment } from './payment.js'
+
 // console.log(cart)
 
 
-export function all(){
-let html = ``;
+export function all() {
+  let html = ``;
 
-cart.forEach((ele) => {
- 
-let matching=MatchCartAndProId(ele.id)
-  // For delivery date
-let deliver=MatchDeliveryAndcartDid(ele.dId)
+  cart.forEach((ele) => {
 
-// Display
-  let today = dayjs();
-  let date = today.add(deliver.d, 'days')
-  let display = date.format(`dddd, MMMM D`);
- 
+    let matching = MatchCartAndProId(ele.id)
+    // For delivery date
+    let deliver = MatchDeliveryAndcartDid(ele.dId)
+    if (!deliver) {
+      console.log('Invalid delivery ID found, resetting...')
+      ele.dId = 1;
+      deliver = MatchDeliveryAndcartDid(1)
 
-  html += `
+    }
+    // Display
+    let date=AddDate(deliver)
+
+    let display = date.format(`dddd, MMMM D`);
+
+
+    html += `
     <div class="cart-item-container  id-${matching.id}">
             <div class="delivery-date">
               Delivery date:${display}
@@ -84,28 +89,26 @@ let deliver=MatchDeliveryAndcartDid(ele.dId)
 
 
 
-}
+  }
 
-)
+  )
 
 
-// delivery Options
+  // delivery Options
 
-function deli(proId, cartEle) {
-  // console.log(proId)
-  let delHtml = ``;
+  function deli(proId, cartEle) {
+    // console.log(proId)
+    let delHtml = ``;
 
-  Delivery.forEach((e) => {
+    Delivery.forEach((e) => {
+  
+      let date = AddDate(e)
+      let display = date.format(`dddd, MMMM D`);
+      let p = e.price === 0 ? 'Free' : `$${convert(e.price)}-`
 
-    let today = dayjs();
-    let date = today.add(e.d, 'days')
-    let display = date.format(`dddd, MMMM D`);
-    let p = e.price === 0 ? 'Free' : `$${convert(e.price)}-`
-
-    let find = cartEle.dId ==e.id
-    // console.log(`1:${typeof(e.id)}`)
-    delHtml +=
-      `
+      let find = cartEle.dId == e.id
+      delHtml +=
+        `
       
                     <div class="delivery-option " data-proid=${proId} data-delid=${e.id}>
                       <input type="radio" ${find ? 'checked' : ''}
@@ -120,91 +123,89 @@ function deli(proId, cartEle) {
                         </div>
                       </div>
                     </div>`
+    }
+    )
+    return delHtml;
+    // all()
   }
-  )
-  return delHtml;
-  // all()
-}
 
 
 
 
 
 
-document.querySelector('.order-summary').innerHTML = html
-updatequantity()
+  document.querySelector('.order-summary').innerHTML = html
+  updatequantity()
 
 
-document.querySelectorAll('.delete-quantity-link').forEach((link) => {
-  let trash;
-  link.addEventListener('click', () => {
-    let del = link.dataset.pId;
-    cart.forEach((e) => {
-      if (e.id === del) {
-        trash = e.id
+  document.querySelectorAll('.delete-quantity-link').forEach((link) => {
+    let trash;
+    link.addEventListener('click', () => {
+      let del = link.dataset.pId;
+      cart.forEach((e) => {
+        if (e.id === del) {
+          trash = e.id
+        }
+      })
+      // console.log(trash)
+      takeOff(trash)
+
+      all()
+      Payment()
+    })
+  })
+
+  document.querySelectorAll('.update-quantity-link').forEach((e) => {
+    let data = e.dataset.upId;
+    e.addEventListener('click', (() => {
+      document.querySelector(`.id-${data}`).classList.add('cont');
+    }))
+
+  })
+
+
+  // Save
+  document.querySelectorAll('.save-quantity').forEach((ele) => {
+    let save = ele.dataset.saveId;
+    let v = document.querySelector(`.inp-${save}`);
+
+    function saving() {
+
+      let val = Number(v.value);
+      document.querySelector(`.q-${save}`).innerHTML = val;
+      newQuan(save, val)
+      updatequantity()
+      // To remove class
+      document.querySelector(`.id-${save}`).classList.remove('cont')
+    }
+    ele.addEventListener('click', (() => {
+      saving()
+      Payment()
+    }))
+
+    let box = document.querySelector(`.inp-${save}`);
+    box.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        saving()
       }
     })
-    // console.log(trash)
-    takeOff(trash)
-
-   all()
-    Payment()
   })
-})
-
-document.querySelectorAll('.update-quantity-link').forEach((e) => {
-  let data = e.dataset.upId;
-  e.addEventListener('click', (() => {
-    document.querySelector(`.id-${data}`).classList.add('cont');
 
 
-  }))
+  function updatequantity() {
+    document.querySelector('.c').innerHTML = quantity();
 
-})
-
-
-// Save
-document.querySelectorAll('.save-quantity').forEach((ele) => {
-  let save = ele.dataset.saveId;
-  let v = document.querySelector(`.inp-${save}`);
-
-  function saving() {
-
-    let val = Number(v.value);
-    document.querySelector(`.q-${save}`).innerHTML = val;
-    newQuan(save, val)
-    updatequantity()
-    // To remove class
-    document.querySelector(`.id-${save}`).classList.remove('cont')
   }
-  ele.addEventListener('click', (() => {
-    saving()
-    Payment()
-  }))
 
-  let box = document.querySelector(`.inp-${save}`);
-  box.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
-      saving()
-    }
+  document.querySelectorAll('.delivery-option').forEach((ele) => {
+    ele.addEventListener('click', () => {
+      let p = ele.dataset.proid;
+      let d = ele.dataset.delid;
+      updateDelivery(p, d);
+      //  This will reload page[Recursion]
+      all()
+      Payment()
+    })
   })
-})
-
-
-function updatequantity() {
-  document.querySelector('.c').innerHTML = quantity();
-
-}
-
-document.querySelectorAll('.delivery-option').forEach((ele)=>{
-  ele.addEventListener('click',()=>{
-    let p=ele.dataset.proid;
-    let d=ele.dataset.delid;
-   updateDelivery(p,d);
-  //  This will reload page[Recursion]
-   all()
-   Payment()
-  })
-})
 
 }
