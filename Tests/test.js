@@ -1,5 +1,5 @@
 import { convert } from "../Script/util/money.js";
-// Checking test cases for currency
+console.log('Checking test cases for currency')
 // basic test case
 if(convert(2095)==='20.95'){
     console.log('Passed')
