@@ -1,4 +1,4 @@
-import { convert } from "../Script/util/money.js";
+import { convert } from "../../Script/util/money.js";
 describe('Checking test cases for currency',()=>{
     it('Converting cents to dollars',()=>{
 expect(convert(2095)).toEqual('20.95')

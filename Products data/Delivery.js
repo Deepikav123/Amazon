@@ -7,7 +7,7 @@ export function MatchDeliveryAndcartDid(Id) {
       deliver = d;
     }
   })
-  console.log(deliver)
+
   return deliver
 
 }

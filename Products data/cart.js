@@ -33,6 +33,7 @@ export function addCart(id) {
     console.log(cart)
     // Here store function is called because,addcart() updates string
     store()
+    console.log(cart)
 }
 
 
@@ -54,9 +55,6 @@ export function quantity() {
     })
     return q;
 }
-// let quan=quantity();
-
-
 
 export function takeOff(delId) {
     let newCart = []
