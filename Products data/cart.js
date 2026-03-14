@@ -29,7 +29,7 @@ export function addCart(id) {
 
     }
     // console.log(typeof(cart.dId))
-    document.querySelector('.n').innerHTML = quantity();
+    document.querySelector('.cartQuantity').innerHTML = quantity();
     console.log(cart)
     // Here store function is called because,addcart() updates string
     store()

@@ -4,7 +4,7 @@ import {convert} from '../util/money.js'
 let htmlcode = ' ';
 products.forEach((items) => {
     htmlcode += `
-    <div class="p">
+    <div class="product">
     <div class="data">
     <div class="im">
 <img src=${items.image} class="i socks">
@@ -57,4 +57,4 @@ document.querySelectorAll('.add').forEach((but) => {
 console.log(cart)
     })
 })
-document.querySelector('.n').innerHTML=quantity()
+document.querySelector('.cartQuantity').innerHTML=quantity()
