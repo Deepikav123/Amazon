@@ -27,7 +27,7 @@ justify-content: space-between;
 
 .search-box {
     padding-left: 18px;
-    min-width: 500px;
+    min-width: 300px;
     height: 38px;
     border: none;
     border-bottom-left-radius: 6px;
@@ -61,21 +61,6 @@ justify-content: space-between;
     margin-right: 30px;
     margin-left: 30px;
 }
-
-.Returns-and-orders {
-    color: white;
-    /* display: block; */
-    font-size: 15px;
-    font-weight: bolder;
-    width: 65px;
- 
-}
-/* 
-.ord {
-    color: white;
-    display: block;
-    font-size: 15px;
-} */
 
 .cart-logo {
     margin-left: 7px;
